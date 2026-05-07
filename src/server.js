@@ -1,4 +1,7 @@
-const express = require('express'); // Importa o Express para criar o servidor web
+const express = require('express'); // Importa o Express para criar
+// o servidor web
+
+const limiter = require('./models/rate-limit');
 
 const connectDatabase = require('./config/database'); // Importa a função de conexão com o banco de dados do arquivo de configuração
 const Aluno = require('./models/Aluno'); // Importa o modelo de dados do Aluno para interagir com a coleção de alunos no MongoDB
@@ -7,6 +10,8 @@ const app = express(); // Cria uma instância do Express para configurar o servi
 const PORT = 3000; // Define a porta em que o servidor irá escutar as requisições
 
 app.use(express.json()); // Middleware para permitir que o servidor entenda requisições com corpo em formato JSON
+
+app.use(limiter);
 
 app.get('/', (req, res) => {
   res.json({ mensagem: 'API REST em Node.js com Express.' });
